@@ -5,3 +5,15 @@ frontend/dist
 bin
 CLAUDE.md
 .ace-tool/
+
+# 环境变量和敏感文件
+.env
+.env.*
+
+# 临时文件
+temp.txt
+*.tmp
+
+# 测试和构建产物
+*.exe
+!build/windows/nsis/*.exe
