@@ -1,0 +1,40 @@
+services:
+  codeswitch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "18100:18100"
+    environment:
+      # Required - must be set by user
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?ADMIN_PASSWORD is required}
+      
+      # Server (optional with defaults)
+      - PORT=8080
+      - PROXY_PORT=18100
+      - PROXY_LISTEN_ADDR=0.0.0.0
+      
+      # Database (optional with defaults)
+      - DATABASE_PATH=/data/app.db
+      
+      # Authentication (optional with defaults)
+      - ADMIN_USERNAME=admin
+      
+      # CORS (optional with defaults)
+      - CORS_ORIGINS=*
+      
+      # Logging (optional with defaults)
+      - LOG_LEVEL=info
+      - LOG_DIR=/data/logs
+      
+      # AI Assistant (optional with defaults)
+      - ASSISTANT_MODEL=claude-sonnet-4-20250514
+    volumes:
+      - codeswitch-data:/data
+    restart: unless-stopped
+
+volumes:
+  codeswitch-data:
+    driver: local
